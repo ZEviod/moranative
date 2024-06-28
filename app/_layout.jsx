@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const RooyLayout = () => {
+const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -39,4 +39,4 @@ const RooyLayout = () => {
   )
 }
 
-export default RooyLayout
+export default RootLayout
