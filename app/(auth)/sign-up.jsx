@@ -4,20 +4,40 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
-
+import { createUser } from "../../lib/appwrite";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignUp = () => {
+    const { setUser, setIsLogged } = useGlobalContext();
+    const [isSubmitting, setSubmitting] = useState(false);
     const [form, setForm] = useState({
         username: '',
         email: '',
         password: ''
     })
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const submit = () => {
+    const submit = async () => {
+        if (form.username === "" || form.email === "" || form.password === "") {
+            Alert.alert("Error", "Please fill in all fields");
+        }
+
+        setSubmitting(true);
+        try {
+            const result = await createUser(form.email, form.password, form.username);
+
+            //set it to global state
+            setUser(result);
+            setIsLogged(true);
+
+            router.replace("/home");
+        } catch (error) {
+            Alert.alert("Error", error.message);
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -36,13 +56,13 @@ const SignUp = () => {
                     />
 
                     <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-                        Sign uo to Aora
+                        Sign up to Aora
                     </Text>
 
                     <FormField
                         title="Username"
                         value={form.username}
-                        handleChangeText={(e) => setForm({ ...form, usernamel: e })}
+                        handleChangeText={(e) => setForm({ ...form, username: e })}
                         otherStyles="mt-7"
                         keyboardType="email-address"
                     />
