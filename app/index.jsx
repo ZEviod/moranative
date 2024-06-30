@@ -4,7 +4,6 @@ import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants"
 import CustomButton from "../components/CustomButton";
-// import 'react-native-url-polyfill/auto'
 import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function App() {
@@ -50,8 +49,7 @@ export default function App() {
                     </Text>
                     <CustomButton
                         title="Continue with Email"
-                        // handlePress={() => router.push("/sign-in")}
-                        handlePress={() => router.push("/home")}
+                        handlePress={() => router.push("/sign-in")}
                         containerStyles="w-full mt-7"
                     />
 
